@@ -51,14 +51,14 @@
                            th:value="${role.getId()}"
                            type="checkbox"
                     />
-                    <div style="color:red" th:errors="*{roles}" th:if="${#fields.hasErrors('roles')}">Ошибка!</div>
                 </div>
             </div>
+            <div style="color:red" th:errors="*{roles}" th:if="${#fields.hasErrors('roles')}">Ошибка!</div>
         </div>
 
-        <input class="submit-button" type="submit" value="Создать пользователя"/>
-        <button class="logout-button" onclick="document.location='/admin'">Вернуться на панель админа</button>
-
+        <input class="action-button" type="submit" value="Создать пользователя"/>
+        <a class="action-button" th:href="@{/admin}">Вернуться на панель админа</a>
+        <a class="action-button" th:href="@{/logout}">Выйти из аккаунта</a>
     </form>
 </div>
 </body>

@@ -17,7 +17,8 @@ table {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="password"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #dddddd;
@@ -49,11 +50,11 @@ th {
     width: 50px;
 }
 
-.th-name{
+.th-name {
     width: 150px;
 }
 
-.th-lastname{
+.th-lastname {
     width: 150px;
 }
 
@@ -61,12 +62,12 @@ th {
     width: 100px;
 }
 
-.th-password{
+.th-password {
     width: 200px;
 }
 
-.th-roles{
-    width: 150px;
+.th-roles {
+    width: 120px;
 }
 
 a:visited {
@@ -77,8 +78,9 @@ a:active {
     color: red;
 }
 
-.create-button, .logout-button, .login-button, .submit-button {
+a.action-button, a.action-button:visited, input[type="submit"] {
     display: block;
+    width: 350px;
     padding: 10px 20px;
     background-color: #4caf50;
     border: 1px solid black;
@@ -91,15 +93,17 @@ a:active {
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin: auto auto 20px auto;
-
+    text-decoration-color: #ffffff;
 }
 
-.create-button:hover, .logout-button:hover, .login-button:hover, .submit-button:hover {
+a.action-button:hover, input[type="submit"]:hover {
     background-color: #45a049;
+    text-decoration-color: #ffffff;
 }
 
-.create-button:active, .logout-button:active, .login-button:active, .submit-button:active {
+a.action-button:active, input[type="submit"]:active {
     background-color: #285c2a;
+    text-decoration-color: #ffffff;
 }
 
 .form-group {

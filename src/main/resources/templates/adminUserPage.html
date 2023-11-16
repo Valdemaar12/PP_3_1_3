@@ -42,7 +42,8 @@
             </tbody>
         </table>
     </div>
-    <button class="logout-button" onclick="document.location='/admin'">Вернуться на панель админа</button>
+    <a class="action-button" th:href="@{/admin}">Вернуться на панель админа</a>
+    <a class="action-button" th:href="@{/logout}">Выйти из аккаунта</a>
 </div>
 </body>
 </html>

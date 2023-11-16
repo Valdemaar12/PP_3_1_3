@@ -6,8 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.bogomolov.springsecurity.entity.Role;
 import ru.bogomolov.springsecurity.entity.User;
 import ru.bogomolov.springsecurity.service.RoleService;
 import ru.bogomolov.springsecurity.service.UserService;
@@ -42,12 +42,19 @@ public class AdminController {
     }
 
     @PostMapping("/user-add")
-    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", roleService.getAllRoles());
             return "user-add";
         }
-
-        userService.saveUser(user);
+        if (userService.findByUsername(user.getUsername()) == null) {
+            userService.saveUser(user);
+        } else {
+            bindingResult.addError(new FieldError("user", "username",
+                    "Пользователь с таким логином уже существует!"));
+            model.addAttribute("roles", roleService.getAllRoles());
+            return "user-add";
+        }
         return "redirect:/admin";
     }
 
@@ -58,8 +65,9 @@ public class AdminController {
         return "user-update";
     }
 
-    @PostMapping ("/user-update")
-    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+    @PatchMapping("/user-update")
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+        model.addAttribute("roles", roleService.getAllRoles());
         if (bindingResult.hasErrors()) {
             return "user-update";
         }
@@ -67,7 +75,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping ("/user-delete")
+    @GetMapping("/user-delete")
     public String deleteUserFromTable(@RequestParam(name = "id") Long id) {
         userService.deleteById(id);
         return "redirect:/admin";

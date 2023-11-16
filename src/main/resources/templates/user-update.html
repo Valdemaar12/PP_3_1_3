@@ -38,7 +38,7 @@
 
         <div class="form-group">
             <label for="password">Пароль</label>
-            <input id="password" th:field="*{password}" type="text"/>
+            <input id="password" th:field="*{password}" type="password"/>
             <div style="color:red" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Error!</div>
         </div>
 
@@ -59,9 +59,9 @@
         </div>
 
         <input name="_method" type="hidden" value="PATCH"/>
-        <input class="submit-button" type="submit" value="Сохранить изменения"/>
-        <button class="logout-button" onclick="document.location='/admin'">Вернуться на панель админа</button>
-
+        <input class="action-button" type="submit" value="Сохранить изменения"/>
+        <a class="action-button" th:href="@{/admin}">Вернуться на панель админа</a>
+        <a class="action-button" th:href="@{/logout}">Выйти из аккаунта</a>
     </form>
 </div>
 </body>

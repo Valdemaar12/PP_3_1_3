@@ -1,5 +1,6 @@
 package ru.bogomolov.springsecurity.init;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,18 +13,13 @@ import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Configuration
+@RequiredArgsConstructor
 public class DataBaseInitializer {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    @Autowired
-    public DataBaseInitializer(UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
-
-    @PostConstruct
+    @PostConstruct // при использовании hbm2ddl.auto=create-drop при создании таблиц создадутся роли admin и user
     public void init() {
         if (roleRepository.findByName("ROLE_ADMIN").isEmpty()) {
             Role adminRole = new Role();

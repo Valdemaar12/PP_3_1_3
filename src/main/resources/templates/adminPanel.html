@@ -44,8 +44,8 @@
             </tbody>
         </table>
     </div>
-    <button class="create-button" onclick="document.location='admin/user-add'">Создать нового пользователя</button>
-    <button class="create-button" onclick="document.location='admin/logout'">Выйти из аккаунта</button>
+    <a class="action-button" th:href="@{/admin/user-add}">Создать нового пользователя</a>
+    <a class="action-button" th:href="@{/logout}">Выйти из аккаунта</a>
 </div>
 </body>
 </html>

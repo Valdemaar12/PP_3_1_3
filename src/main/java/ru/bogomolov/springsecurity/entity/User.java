@@ -11,11 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
 @Table(name = "users")
@@ -30,11 +29,11 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "name")
-    @Pattern(regexp = "^[A-ZА-Я]{1}[a-zA-Zа-яА-Я]*((-)[a-zA-Zа-яА-Я])*$", message = "Некорректный формат имени: проверьте введённые данные")
+    @Pattern(regexp = "^[A-ZА-Я][a-zA-Zа-яА-Я]*((-)[a-zA-Zа-яА-Я])*$", message = "Некорректный формат имени: проверьте введённые данные")
     private String name;
 
     @Column(name = "lastName")
-    @Pattern(regexp = "^[A-ZА-Я]{1}[a-zA-Zа-яА-Я]*((-)[a-zA-Zа-яА-Я])*$", message = "Некорректный формат фамилии: проверьте введённые данные")
+    @Pattern(regexp = "^[A-ZА-Я][a-zA-Zа-яА-Я]*((-)[a-zA-Zа-яА-Я])*$", message = "Некорректный формат фамилии: проверьте введённые данные")
     private String lastName;
 
     @Column(name = "age")
@@ -43,11 +42,11 @@ public class User implements UserDetails {
     private byte age;
 
     @Column(name = "username", unique = true)
-    @NotNull(message = "Некорректный формат логина: проверьте введённые данные")
+    @NotEmpty(message = "Некорректный формат логина: проверьте введённые данные")
     private String username;
 
     @Column(name = "password")
-    @NotNull(message = "Некорректный формат пароля: проверьте введённые данные")
+    @NotEmpty(message = "Некорректный формат пароля: проверьте введённые данные")
     private String password;
 
     @Fetch(FetchMode.JOIN)
@@ -57,11 +56,13 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @NotEmpty(message = "Некорректный формат пароля: проверьте введённые данные")
     private Collection<Role> roles;
 
-    public String toStringUserRoles(){
-        return roles.toString() +"\n";
+    public String toStringUserRoles() {
+        return roles.toString();
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
